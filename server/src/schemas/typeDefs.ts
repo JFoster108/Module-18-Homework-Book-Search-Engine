@@ -24,6 +24,7 @@ export const typeDefs = gql`
 
   type Query {
     me: User
+    books: [Book]
   }
 
   input BookInput {

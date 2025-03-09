@@ -3,8 +3,8 @@ import { expressMiddleware } from '@apollo/server/express4';
 import express from 'express';
 import path from 'node:path';
 import db from './config/connection.js';
-import { typeDefs } from '././schemas/typeDefs.js';
-import { resolvers } from '././schemas/resolvers.js';
+import { typeDefs } from './schemas/typeDefs.js';
+import { resolvers } from './schemas/resolvers.js';
 import { authMiddleware } from './services/auth.js';
 
 const app = express();
@@ -24,7 +24,7 @@ async function startApolloServer() {
     app.use(express.static(path.join(__dirname, '../client/build')));
   }
 
-  app.use('/graphql', expressMiddleware(server, { context: authMiddleware }));
+  app.use('/graphql', expressMiddleware(server, { context: async ({ req }) => await authMiddleware({ req }) }));
 
   db.once('open', () => {
     app.listen(PORT, () => console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`));
