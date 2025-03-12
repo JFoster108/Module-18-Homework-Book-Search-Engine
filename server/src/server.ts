@@ -3,8 +3,7 @@ import { expressMiddleware } from '@apollo/server/express4';
 import express from 'express';
 import path from 'node:path';
 import db from './config/connection.js';
-import { typeDefs } from './schemas/typeDefs.js';
-import { resolvers } from './schemas/resolvers.js';
+import { typeDefs, resolvers } from './schemas/index.js';
 import { authMiddleware } from './services/auth.js';
 
 const app = express();
@@ -17,7 +16,7 @@ const server = new ApolloServer({
 
 async function startApolloServer() {
   await server.start();
-  
+
   app.use(express.json());
 
   if (process.env.NODE_ENV === 'production') {

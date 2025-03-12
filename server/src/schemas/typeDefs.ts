@@ -1,6 +1,6 @@
 import { gql } from 'graphql-tag';
 
-export const typeDefs = gql`
+const typeDefs = gql`
   type Book {
     _id: ID!
     title: String!
@@ -42,3 +42,5 @@ export const typeDefs = gql`
     removeBook(bookId: ID!): User
   }
 `;
+
+export default typeDefs

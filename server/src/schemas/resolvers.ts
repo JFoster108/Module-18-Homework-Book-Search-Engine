@@ -1,5 +1,7 @@
-import User, { IUser } from '../models/User.js';
-import Book, { IBook } from '../models/Book.js';
+import User from '../models/User.js';
+import Book from '../models/Book.js';
+import { IUser } from '../models/User.js';
+import { IBook } from '../models/Book.js';
 import { AuthenticationError } from 'apollo-server-express';
 import { signToken } from '../services/auth.js';
 
@@ -23,13 +25,23 @@ const resolvers = {
         throw new AuthenticationError('Invalid credentials');
       }
 
-      const token = signToken(user);
+      const token = signToken({
+        _id: String(user._id),
+        username: user.username,
+        email: user.email,
+      });
+      
       return { token, user };
     },
 
     addUser: async (_parent: any, { username, email, password }: { username: string, email: string, password: string }): Promise<{ token: string; user: IUser } | null> => {
       const user = await User.create({ username, email, password });
-      const token = signToken(user);
+      const token = signToken({
+        _id: String(user._id),
+        username: user.username,
+        email: user.email,
+      });
+      
       return { token, user };
     },
 
