@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'url';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import express from 'express';
@@ -8,6 +9,9 @@ import { authMiddleware } from './services/auth.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
 const server = new ApolloServer({
   typeDefs,
