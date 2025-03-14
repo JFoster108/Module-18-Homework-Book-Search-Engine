@@ -24,7 +24,8 @@ async function startApolloServer() {
   app.use(express.json());
 
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/build')));
+    console.log(__dirname)
+    app.use(express.static(path.join(__dirname, '../../client/dist')));
   }
 
   app.use('/graphql', expressMiddleware(server, { context: async ({ req }) => await authMiddleware({ req }) }));
